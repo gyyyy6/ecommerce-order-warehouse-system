@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}订单详情 · 中小电商订单管理{% endblock %}
+{% block content %}
+<section class="panel" id="order-detail" data-order-id="{{ order_id }}">
+  <div class="panel-head">
+    <div>
+      <h1>订单详情 <span class="muted">#{{ order_id }}</span></h1>
+      <p class="muted">客户、明细、商品、分类、物流与金额汇总来自多表 join。</p>
+    </div>
+    <a class="btn ghost" href="{{ url_for('pages.orders_list') }}">返回列表</a>
+  </div>
+
+  <div id="detail-loading" class="muted">加载中...</div>
+
+  <div id="detail-content" class="hidden">
+    <div class="summary-grid" id="detail-summary"></div>
+
+    <h2>订单明细</h2>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>商品</th>
+            <th>SKU</th>
+            <th>分类</th>
+            <th>数量</th>
+            <th>单价</th>
+            <th>行金额</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody id="detail-items"></tbody>
+      </table>
+    </div>
+
+    <h2>物流信息</h2>
+    <div id="detail-shipment" class="kv-grid"></div>
+  </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='order_detail.js') }}"></script>
+{% endblock %}

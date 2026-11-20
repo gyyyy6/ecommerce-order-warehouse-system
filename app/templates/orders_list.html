@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+{% block title %}订单列表 · 中小电商订单管理{% endblock %}
+{% block content %}
+<section class="panel">
+  <div class="panel-head">
+    <div>
+      <h1>订单列表</h1>
+      <p class="muted">按客户、状态、日期筛选；创建订单时会扣减库存并生成物流单。</p>
+    </div>
+    <a class="btn ghost" href="{{ url_for('pages.orders_list') }}">刷新</a>
+  </div>
+
+  <form id="filter-form" class="filter-grid">
+    <label>客户 ID
+      <input id="filter-customer" type="number" min="1" placeholder="例如 1">
+    </label>
+    <label>状态
+      <select id="filter-status">
+        <option value="">全部</option>
+        <option value="PENDING">PENDING</option>
+        <option value="PAID">PAID</option>
+        <option value="SHIPPED">SHIPPED</option>
+        <option value="COMPLETED">COMPLETED</option>
+        <option value="CANCELLED">CANCELLED</option>
+      </select>
+    </label>
+    <label>开始日期
+      <input id="filter-date-from" type="date">
+    </label>
+    <label>结束日期
+      <input id="filter-date-to" type="date">
+    </label>
+    <label>每页
+      <select id="filter-page-size">
+        <option value="10">10</option>
+        <option value="20" selected>20</option>
+        <option value="50">50</option>
+      </select>
+    </label>
+    <div class="filter-actions">
+      <button class="btn" type="submit">筛选</button>
+      <button class="btn ghost" type="button" id="filter-reset">重置</button>
+    </div>
+  </form>
+</section>
+
+<section class="panel">
+  <div class="panel-head">
+    <div>
+      <h2>创建订单</h2>
+      <p class="muted">同一商品重复添加会合并数量；库存不足时整单回滚。</p>
+    </div>
+  </div>
+
+  <div class="create-grid">
+    <label>客户 ID
+      <input id="create-customer" type="number" min="1" placeholder="例如 1">
+    </label>
+    <label>收货地址（留空使用客户默认地址）
+      <input id="create-address" type="text" maxlength="255" placeholder="例如 广州市示例区第 1 街道 1 号">
+    </label>
+    <label>商品搜索
+      <input id="product-search" type="text" maxlength="80" placeholder="输入商品名称关键词">
+    </label>
+    <label>选择商品
+      <select id="product-select"></select>
+    </label>
+    <label>数量
+      <input id="product-quantity" type="number" min="1" max="1000" value="1">
+    </label>
+    <div class="filter-actions">
+      <button class="btn ghost" type="button" id="product-search-btn">搜索商品</button>
+      <button class="btn" type="button" id="add-item-btn">添加明细</button>
+    </div>
+  </div>
+
+  <div class="selected-items">
+    <h3>已选明细</h3>
+    <ul id="selected-items" class="selected-list">
+      <li class="muted">尚未添加商品</li>
+    </ul>
+  </div>
+
+  <div class="filter-actions">
+    <button class="btn primary" type="button" id="create-order-btn">创建订单</button>
+  </div>
+</section>
+
+<section class="panel">
+  <div class="panel-head">
+    <div>
+      <h2>订单查询结果</h2>
+      <p class="muted" id="order-count">加载中...</p>
+    </div>
+  </div>
+
+  <div class="table-wrap">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>订单号</th>
+          <th>客户</th>
+          <th>状态</th>
+          <th>下单时间</th>
+          <th>金额</th>
+          <th>明细</th>
+          <th>物流</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody id="orders-body">
+        <tr><td colspan="8" class="muted">加载中...</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="pagination">
+    <button class="btn ghost" type="button" id="prev-page">上一页</button>
+    <span id="page-info">第 1 页</span>
+    <button class="btn ghost" type="button" id="next-page">下一页</button>
+  </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+{% endblock %}

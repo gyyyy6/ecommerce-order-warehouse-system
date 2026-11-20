@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="csrf-token" content="{{ csrf_token }}">
+  <title>{% block title %}中小电商订单管理{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="{{ url_for('pages.orders_list') }}">中小电商订单管理</a>
+      <nav class="nav">
+        <a href="{{ url_for('pages.orders_list') }}">订单列表</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container main">
+    <div id="message" class="message hidden" role="status" aria-live="polite"></div>
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="footer">
+    <div class="container">数据库系统原理课程设计 · PostgreSQL + Flask + psycopg2 原生 SQL</div>
+  </footer>
+
+  {% block scripts %}{% endblock %}
+</body>
+</html>

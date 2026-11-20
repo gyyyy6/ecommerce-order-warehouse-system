@@ -1,0 +1,33 @@
+# 环境与密钥
+.env
+.env.*
+!.env.example
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# 日志与备份
+*.log
+course_db.dump
+*.dump
+
+# 证据原始大文件（汇总 CSV/JSON 与截图仍可提交）
+docs/evidence/**/raw/
+
+# 系统/IDE
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+# 测试运行结果（CSV/JSON 由脚本生成）
+tests/results/
+
+# 本地助手/IDE 工作数据（保留在本地，不进入封板仓库）
+.workbuddy/
+
+# Windows 一键启动脚本（含演示 VM 口令，仅本机使用，不进仓库）
+一键启动.bat
